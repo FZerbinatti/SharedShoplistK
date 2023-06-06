@@ -10,14 +10,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -40,7 +47,12 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBox_ID_Spesa(){
 
+
+
     val context = LocalContext.current
+    //questa variabile quando diventa vera triggera l'AlertDialog
+    var showDialog = remember { mutableStateOf(false) }
+    var alertPastedIdSpesa = remember { mutableStateOf("") }
 
     val robotoFont = FontFamily(
         Font(R.font.robotthin, FontWeight.Thin),
@@ -49,12 +61,59 @@ fun TopBox_ID_Spesa(){
 
     val spesa_ID = remember { mutableStateOf("Y751DR9ZOA") }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    if (showDialog.value)
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = { Text(text = "Paste Here the ID") },
+
+            text = {
+                Column() {
+                    TextField(
+                        value = alertPastedIdSpesa.value,
+                        onValueChange = { alertPastedIdSpesa.value = it }
+                    )
+
+                }
+            },
+
+
+            //on confirm, se il textbox non è vuoto, compialo nella casella
+            confirmButton = {
+                Button(onClick = {
+
+                    if (!alertPastedIdSpesa.value.isEmpty()){
+                        spesa_ID.value=alertPastedIdSpesa.value
+                        //load from firebase
+
+                        //save on firebase
+
+                        //genarate random ID
+                        showDialog.value=false
+
+                    }else{
+                        Toast.makeText(context, "ID vuoto", Toast.LENGTH_LONG).show()
+                    }
+
+                }) {
+                    Text(text = "Conferma")
+                }
+            },
+
+            //on dismiss cancella l'alert
+            dismissButton = {
+                Button(onClick = { showDialog.value=false}) {
+                    Text(text = "Annulla")
+
+                }
+            }
+        )
+
+    Row(verticalAlignment = Alignment.CenterVertically,  modifier = Modifier.fillMaxWidth()) {
 
         Row(
             Modifier
                 .padding(10.dp)
-
+                .fillMaxWidth()
                 .border(
                     width = 1.dp,
                     color = Color.Gray,
@@ -68,21 +127,22 @@ fun TopBox_ID_Spesa(){
             Box() {
 
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically,) {
                     Text(
                         "ID Spesa:",
                         fontFamily = robotoFont,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Normal,
                         fontSize = 20.sp,
 
                         color = colorResource(id = R.color.texts_color),
                         modifier = Modifier
                             .padding(10.dp)
                     )
-                    Row(
+                    Row( verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End,
+
                         modifier = Modifier
                             .padding(10.dp)
-                            //.fillMaxWidth()
+                            .fillMaxWidth()
                             .border(
                                 width = 1.dp,
                                 color = Color.Gray,
@@ -90,19 +150,22 @@ fun TopBox_ID_Spesa(){
                             )
                             .clip(RoundedCornerShape(15.dp))
                             .background(Color.White),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
+
                     ) {
 
-                        Text(
-                            spesa_ID.value,
-                            fontFamily = robotoFont,
+                        ClickableText(
+                            AnnotatedString(spesa_ID.value),
+                            onClick = {
+                                showDialog.value= true
+
+                            },
+                            /*fontFamily = robotoFont,
                             fontWeight = FontWeight.Bold,
                             fontSize = 20.sp,
                             color = colorResource(id = R.color.texts_color),
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.Center,*/
                             modifier = Modifier
-                                .padding(horizontal = 15.dp, ),
+                                .padding(horizontal = 15.dp),
 
                             )
 
@@ -138,21 +201,21 @@ fun TopBox_ID_Spesa(){
             }
 
         }
-        Button(
+        /*Button(
             onClick = { },
-            Modifier.width(40.dp).height(60.dp).padding(0.dp,0.dp,10.dp,0.dp),
+            Modifier.width(40.dp).height(60.dp).padding(0.dp,0.dp,0.dp,0.dp),
             border = BorderStroke(1.dp, Color.Gray),
             shape = RoundedCornerShape(50),
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Gray,
                 backgroundColor = Color.White)) {
             Image(
-                painter = painterResource(id = R.drawable.ic_copy),
+                painter = painterResource(id = R.drawable.ic_menu),
                 contentDescription = null,
                 contentScale = ContentScale.None,
 
                 )
-        }
+        }*/
 
 
     }
@@ -161,3 +224,6 @@ fun TopBox_ID_Spesa(){
 
 
 }
+
+
+
