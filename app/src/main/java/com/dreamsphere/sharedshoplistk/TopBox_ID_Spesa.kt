@@ -15,13 +15,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
@@ -31,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -39,17 +36,19 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TopBox_ID_Spesa(){
+fun TopBox_ID_Spesa() {
+
 
 
 
     val context = LocalContext.current
+
+
+
     //questa variabile quando diventa vera triggera l'AlertDialog
     var showDialog = remember { mutableStateOf(false) }
     var alertPastedIdSpesa = remember { mutableStateOf("") }
@@ -57,9 +56,15 @@ fun TopBox_ID_Spesa(){
     val robotoFont = FontFamily(
         Font(R.font.robotthin, FontWeight.Thin),
         Font(R.font.robotoregular, FontWeight.Normal),
-        Font(R.font.robotobold, FontWeight.Bold),)
+        Font(R.font.robotobold, FontWeight.Bold),
+    )
 
-    val spesa_ID = remember { mutableStateOf("Y751DR9ZOA") }
+    //se non è presente nessun ID nel database, generane uno nuovo
+    val spesa_ID = remember { mutableStateOf(getRandomString (10)) }
+    //Toast.makeText(context, "Db Inserted", Toast.LENGTH_LONG).show()
+
+
+
 
     if (showDialog.value)
         AlertDialog(
@@ -72,7 +77,6 @@ fun TopBox_ID_Spesa(){
                         value = alertPastedIdSpesa.value,
                         onValueChange = { alertPastedIdSpesa.value = it }
                     )
-
                 }
             },
 
@@ -81,16 +85,12 @@ fun TopBox_ID_Spesa(){
             confirmButton = {
                 Button(onClick = {
 
-                    if (!alertPastedIdSpesa.value.isEmpty()){
-                        spesa_ID.value=alertPastedIdSpesa.value
-                        //load from firebase
+                    if (!alertPastedIdSpesa.value.isEmpty()) {
+                        spesa_ID.value = alertPastedIdSpesa.value
 
-                        //save on firebase
+                        showDialog.value = false
 
-                        //genarate random ID
-                        showDialog.value=false
-
-                    }else{
+                    } else {
                         Toast.makeText(context, "ID vuoto", Toast.LENGTH_LONG).show()
                     }
 
@@ -101,14 +101,14 @@ fun TopBox_ID_Spesa(){
 
             //on dismiss cancella l'alert
             dismissButton = {
-                Button(onClick = { showDialog.value=false}) {
+                Button(onClick = { showDialog.value = false }) {
                     Text(text = "Annulla")
 
                 }
             }
         )
 
-    Row(verticalAlignment = Alignment.CenterVertically,  modifier = Modifier.fillMaxWidth()) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
 
         Row(
             Modifier
@@ -127,7 +127,7 @@ fun TopBox_ID_Spesa(){
             Box() {
 
 
-                Row(verticalAlignment = Alignment.CenterVertically,) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         "ID Spesa:",
                         fontFamily = robotoFont,
@@ -138,7 +138,9 @@ fun TopBox_ID_Spesa(){
                         modifier = Modifier
                             .padding(10.dp)
                     )
-                    Row( verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End,
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
 
                         modifier = Modifier
                             .padding(10.dp)
@@ -151,12 +153,12 @@ fun TopBox_ID_Spesa(){
                             .clip(RoundedCornerShape(15.dp))
                             .background(Color.White),
 
-                    ) {
+                        ) {
 
                         ClickableText(
                             AnnotatedString(spesa_ID.value),
                             onClick = {
-                                showDialog.value= true
+                                showDialog.value = true
 
                             },
                             /*fontFamily = robotoFont,
@@ -172,10 +174,15 @@ fun TopBox_ID_Spesa(){
                         Button(
                             onClick = {
 
-                                val clipboardManager =context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clipboardManager =
+                                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                 val clipData = ClipData.newPlainText("ID_Spesa", spesa_ID.value)
                                 clipboardManager.setPrimaryClip(clipData)
-                                Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    context,
+                                    "Text copied to clipboard",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             },
                             Modifier.height(50.dp),
                             border = BorderStroke(1.dp, Color.Gray),
@@ -189,41 +196,17 @@ fun TopBox_ID_Spesa(){
                                 contentDescription = null
                             )
                         }
-
-
                     }
-
-
-
-
                 }
-
             }
-
         }
-        /*Button(
-            onClick = { },
-            Modifier.width(40.dp).height(60.dp).padding(0.dp,0.dp,0.dp,0.dp),
-            border = BorderStroke(1.dp, Color.Gray),
-            shape = RoundedCornerShape(50),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.Gray,
-                backgroundColor = Color.White)) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_menu),
-                contentDescription = null,
-                contentScale = ContentScale.None,
-
-                )
-        }*/
-
-
     }
-
-
-
-
 }
 
-
+fun getRandomString(length: Int) : String {
+    val allowedChars = ('A'..'Z') + ('0'..'9')
+    return (1..length)
+        .map { allowedChars.random() }
+        .joinToString("")
+}
 
