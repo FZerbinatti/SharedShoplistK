@@ -34,81 +34,95 @@ import androidx.compose.ui.unit.dp
 fun SpesaList(viewModel: MainViewModel) {
 
 
-        val shopListState = viewModel.shopListFlow.collectAsState()
-        val lazyListState = rememberLazyListState()
-        val scope = rememberCoroutineScope()
+    val shopListState = viewModel.shopListFlow.collectAsState()
+    val lazyListState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
 
 
 
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 10.dp)
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 10.dp)
 
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .border(
-                    width = 1.dp,
-                    color = Color.Gray,
-                    shape = RoundedCornerShape(15.dp)
-                )
-                .clip(RoundedCornerShape(15.dp))
-                .background(Color.White)
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .border(
+                width = 1.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(15.dp)
+            )
+            .clip(RoundedCornerShape(15.dp))
+            .background(Color.White)
 
 
-
+    ) {
+        LazyColumn(
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.padding(10.dp),
+            state = LazyListState()
         ) {
-            LazyColumn(
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier.padding(10.dp),
-                state = LazyListState()
-            ) {
 
-                items(
-                    items = shopListState.value,
-                    key = { shopItem -> shopItem.id },
-                    itemContent = { item ->
-                        val currentItem by rememberUpdatedState(item)
-                        val dismissState = rememberDismissState(
-                            confirmStateChange = {
-                                if (it == DismissValue.DismissedToStart || it == DismissValue.DismissedToEnd) {
-                                    viewModel.removeRecord(currentItem)
-                                    true
-                                } else false
+            items(
+                items = shopListState.value,
+                key = { shopItem -> shopItem.id },
+                itemContent = { item ->
+                    val currentItem by rememberUpdatedState(item)
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = {
+
+                            if (it == DismissValue.DismissedToStart) {
+                                viewModel.removeRecord(currentItem)
+                                true
+
+                            } else if (it == DismissValue.DismissedToEnd) {
+                                //rimuovi item ma mettilo in coda come checked
+                                viewModel.addRecord(currentItem.item_name, true)
+
+                                viewModel.removeRecord(currentItem)
+                                true
+
+                            } else {
+                                false
                             }
-                        )
-
-                        if (dismissState.isDismissed(DismissDirection.EndToStart) ||
-                            dismissState.isDismissed(DismissDirection.StartToEnd)){
-                            viewModel.removeRecord(item)
                         }
+                    )
 
-                        SwipeToDismiss(
-                            state = dismissState,
-                            modifier = Modifier
-                                .padding(vertical = 1.dp)
-                                .animateItemPlacement(),
-                            directions = setOf(
-                                DismissDirection.StartToEnd,
-                                DismissDirection.EndToStart
-                            ),
-                            dismissThresholds = { direction ->
-                                FractionalThreshold(
-                                    if (direction == DismissDirection.StartToEnd) 0.15f else 0.15f
-                                )
-                            },
+                    if (dismissState.isDismissed(DismissDirection.EndToStart)) {
+                        viewModel.removeRecord(item)
+                    } else if (dismissState.isDismissed(DismissDirection.StartToEnd)) {
+                        //rimuovi item ma mettilo in coda come checked
+                        viewModel.addRecord(currentItem.item_name, true)
 
-                            background = {
-                                SwipeBackground(dismissState)
-                            },
-                            dismissContent = {
-                                ShopListItemRow(item, shopListState, viewModel)
-                            }
-                        )
+                        viewModel.removeRecord(item)
                     }
-                )
-            }
+
+                    SwipeToDismiss(
+                        state = dismissState,
+                        modifier = Modifier
+                            .padding(vertical = 1.dp)
+                            .animateItemPlacement(),
+                        directions = setOf(
+                            DismissDirection.StartToEnd,
+                            DismissDirection.EndToStart
+                        ),
+                        dismissThresholds = { direction ->
+                            FractionalThreshold(
+                                if (direction == DismissDirection.StartToEnd) 0.15f else 0.15f
+                            )
+                        },
+
+                        background = {
+                            SwipeBackground(dismissState)
+                        },
+                        dismissContent = {
+                            ShopListItemRow(item, shopListState, viewModel)
+                        }
+                    )
+                }
+            )
         }
+    }
 
 
 }

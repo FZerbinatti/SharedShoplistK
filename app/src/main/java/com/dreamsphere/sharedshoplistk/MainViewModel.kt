@@ -19,11 +19,11 @@ class MainViewModel : ViewModel() {
 
 
 
-    fun addRecord(titleText: String, urgency: Boolean) {
+    public fun addRecord(titleText: String, checked: Boolean) {
         if(shopList.isEmpty()){
-            shopList.add(ShopListItem(1,titleText ,false))
+            shopList.add(ShopListItem(1,titleText ,checked))
         }else{
-            shopList.add(ShopListItem(shopList.last().id +1,titleText ,false))
+            shopList.add(ShopListItem(shopList.last().id +1,titleText ,checked))
 
         }
     }

@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -41,18 +43,35 @@ fun ShopListItemRow(
                 .padding(8.dp),
             text = item.title
         )*/
-        Text(
-            item.item_name,
-            modifier = Modifier
-            .weight(1f)
-            .padding(8.dp),
+        if (item.item_checked){
+            Text(
+                item.item_name,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp),
 
-            textAlign = TextAlign.Start,
-            fontFamily = robotoFont,
-            fontWeight = FontWeight.Normal,
-            fontSize = 22.sp,
-            color = colorResource(id = R.color.texts_color),
-        )
+                textAlign = TextAlign.Start,
+                fontFamily = robotoFont,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                color = colorResource(id = R.color.texts_color),
+                style = TextStyle(textDecoration = TextDecoration.LineThrough)
+            )
+        }else{
+            Text(
+                item.item_name,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp),
+
+                textAlign = TextAlign.Start,
+                fontFamily = robotoFont,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                color = colorResource(id = R.color.texts_color)
+            )
+        }
+
         Checkbox(
             checked = item.item_checked,
             onCheckedChange = {
