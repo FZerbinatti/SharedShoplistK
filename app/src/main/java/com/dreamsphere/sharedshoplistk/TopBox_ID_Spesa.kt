@@ -43,14 +43,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBox_ID_Spesa(spesa_ID: String) {
 
-
-
-
-
-
     val context = LocalContext.current
-
-
 
     //questa variabile quando diventa vera triggera l'AlertDialog
     var showDialog = remember { mutableStateOf(false) }
@@ -64,12 +57,7 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
 
     //se non è presente nessun ID nel sharedPreferences, generane uno nuovo
 
-
-
     //Toast.makeText(context, "Db Inserted", Toast.LENGTH_LONG).show()
-
-
-
 
     if (showDialog.value)
         AlertDialog(

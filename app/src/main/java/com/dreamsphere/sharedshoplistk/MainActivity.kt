@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
             var showDialog = remember { mutableStateOf(false) }
             val scope = rememberCoroutineScope()
             val lazyListState = rememberLazyListState()
-            val todoListState = viewModel.todoListFlow.collectAsState()
+            val todoListState = viewModel.shopListFlow.collectAsState()
 
 
 

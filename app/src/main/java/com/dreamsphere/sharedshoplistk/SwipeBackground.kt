@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -25,8 +26,8 @@ fun SwipeBackground(dismissState: DismissState) {
     val color by animateColorAsState(
         when (dismissState.targetValue) {
             DismissValue.Default -> Color.LightGray
-            DismissValue.DismissedToEnd -> Color.Green
-            DismissValue.DismissedToStart -> Color.Red
+            DismissValue.DismissedToEnd -> colorResource(id = R.color.swipe_bacgkorund_yellow)
+            DismissValue.DismissedToStart -> colorResource(id = R.color.swipe_bacgkorund_red)
         }
     )
     val alignment = when (direction) {
