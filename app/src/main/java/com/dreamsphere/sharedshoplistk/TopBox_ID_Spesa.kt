@@ -3,6 +3,7 @@ package com.dreamsphere.sharedshoplistk
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -40,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TopBox_ID_Spesa() {
+fun TopBox_ID_Spesa(spesa_ID: String) {
 
 
 
@@ -59,8 +60,10 @@ fun TopBox_ID_Spesa() {
         Font(R.font.robotobold, FontWeight.Bold),
     )
 
-    //se non è presente nessun ID nel database, generane uno nuovo
-    val spesa_ID = remember { mutableStateOf(getRandomString (10)) }
+    //se non è presente nessun ID nel sharedPreferences, generane uno nuovo
+
+
+
     //Toast.makeText(context, "Db Inserted", Toast.LENGTH_LONG).show()
 
 
@@ -86,9 +89,10 @@ fun TopBox_ID_Spesa() {
                 Button(onClick = {
 
                     if (!alertPastedIdSpesa.value.isEmpty()) {
-                        spesa_ID.value = alertPastedIdSpesa.value
+                        var spesa_ID = alertPastedIdSpesa.value
 
                         showDialog.value = false
+
 
                     } else {
                         Toast.makeText(context, "ID vuoto", Toast.LENGTH_LONG).show()
@@ -156,7 +160,7 @@ fun TopBox_ID_Spesa() {
                         ) {
 
                         ClickableText(
-                            AnnotatedString(spesa_ID.value),
+                            AnnotatedString(spesa_ID),
                             onClick = {
                                 showDialog.value = true
 
@@ -176,7 +180,7 @@ fun TopBox_ID_Spesa() {
 
                                 val clipboardManager =
                                     context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                val clipData = ClipData.newPlainText("ID_Spesa", spesa_ID.value)
+                                val clipData = ClipData.newPlainText("ID_Spesa", spesa_ID)
                                 clipboardManager.setPrimaryClip(clipData)
                                 Toast.makeText(
                                     context,

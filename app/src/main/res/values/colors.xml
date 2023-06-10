@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="main_page_background">#9EECECEC</color>
+    <color name="button_color">#D8D7D7</color>
+
     <color name="texts_color">#D84A4A4A</color>
 </resources>
