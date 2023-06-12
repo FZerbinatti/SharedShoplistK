@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -62,7 +63,7 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
     if (showDialog.value)
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
-            title = { Text(text = "Paste Here the ID") },
+            title = { Text(text = context.getString(R.string.ALERT_PASTE_ID_SPESA)) },
 
             text = {
                 Column() {
@@ -85,18 +86,18 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
 
 
                     } else {
-                        Toast.makeText(context, "ID vuoto", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, context.getString(R.string.EMPTY_ID), Toast.LENGTH_LONG).show()
                     }
 
                 }) {
-                    Text(text = "Conferma")
+                    Text(text = stringResource(R.string.CONFIRM))
                 }
             },
 
             //on dismiss cancella l'alert
             dismissButton = {
                 Button(onClick = { showDialog.value = false }) {
-                    Text(text = "Annulla")
+                    Text(text = stringResource(R.string.CANCEL))
 
                 }
             }
@@ -123,7 +124,7 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        "ID Spesa:",
+                        stringResource(R.string.ID_SHOPLIST),
                         fontFamily = robotoFont,
                         fontWeight = FontWeight.Normal,
                         fontSize = 20.sp,
@@ -174,7 +175,7 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
                                 clipboardManager.setPrimaryClip(clipData)
                                 Toast.makeText(
                                     context,
-                                    "Text copied to clipboard",
+                                    context.getString(R.string.text_copied_to_clipboard),
                                     Toast.LENGTH_LONG
                                 ).show()
                             },

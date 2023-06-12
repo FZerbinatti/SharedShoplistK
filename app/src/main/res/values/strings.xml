@@ -1,7 +1,15 @@
 <resources>
-    <string name="app_name">SharedShoplistK</string>
+    <string name="app_name">Cloud Shoplist</string>
     <string name="SHOPLIST_ID">"0"</string>
 
+    // S T R I N G S
+
+    <string name="ALERT_PASTE_ID_SPESA">"Incolla qui l'ID spesa"</string>
+    <string name="EMPTY_ID">ID vuoto</string>
+    <string name="CANCEL">Annulla</string>
+    <string name="ID_SHOPLIST">ID Spesa:</string>
+    <string name="text_copied_to_clipboard">ID copiato correttamente</string>
+    <string name="CONFIRM">Conferma</string>
 
 
 </resources>
