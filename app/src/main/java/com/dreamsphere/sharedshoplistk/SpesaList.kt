@@ -119,13 +119,22 @@ fun SpesaList(viewModel: MainViewModel) {
                             ShopListItemRow(item, shopListState, viewModel)
                         }
                     )
+                    //SetData(viewModel)
+
                 }
+
             )
+
         }
     }
 
 
 }
+
+/*@Composable
+fun SetData(viewModel: MainViewModel){
+    when(val result = viewModel.response.value)
+}*/
 
 
 
