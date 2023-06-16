@@ -1,4 +1,4 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.view
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.dreamsphere.sharedshoplistk.R
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)

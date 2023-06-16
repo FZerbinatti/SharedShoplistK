@@ -1,7 +1,6 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.view
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,12 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.dreamsphere.sharedshoplistk.viewmodel.MainViewModel
+import com.dreamsphere.sharedshoplistk.R
 import kotlinx.coroutines.android.awaitFrame
 
 @Composable

@@ -1,6 +1,5 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.view
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -20,6 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsphere.sharedshoplistk.viewmodel.MainViewModel
+import com.dreamsphere.sharedshoplistk.R
+import com.dreamsphere.sharedshoplistk.models.ShopListItem
 
 @Composable
 fun ShopListItemRow(

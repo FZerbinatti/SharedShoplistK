@@ -1,4 +1,4 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.models
 
 data class ShopListItem (
 

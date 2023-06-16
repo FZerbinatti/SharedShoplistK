@@ -1,9 +1,8 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -40,6 +39,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsphere.sharedshoplistk.R
 
 @Composable
 fun TopBox_ID_Spesa(spesa_ID: String) {
@@ -196,6 +196,8 @@ fun TopBox_ID_Spesa(spesa_ID: String) {
             }
         }
     }
+
+
 }
 
 fun getRandomString(length: Int) : String {

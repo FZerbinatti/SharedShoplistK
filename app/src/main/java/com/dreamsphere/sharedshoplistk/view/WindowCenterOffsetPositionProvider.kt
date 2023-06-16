@@ -1,4 +1,4 @@
-package com.dreamsphere.sharedshoplistk
+package com.dreamsphere.sharedshoplistk.view
 
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
