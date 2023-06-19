@@ -1,4 +1,4 @@
-package com.dreamsphere.sharedshoplistk.repository
+package com.dreamsphere.sharedshoplistk.repository.Firebase
 
 import com.dreamsphere.sharedshoplistk.models.ShopListItem
 

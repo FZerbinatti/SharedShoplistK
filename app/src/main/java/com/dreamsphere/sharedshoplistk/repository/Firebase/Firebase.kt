@@ -1,13 +1,9 @@
-package com.dreamsphere.sharedshoplistk.repository
+package com.dreamsphere.sharedshoplistk.repository.Firebase
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
-import com.dreamsphere.sharedshoplistk.R
-import com.dreamsphere.sharedshoplistk.models.FirebaseShoplistItem
 import com.dreamsphere.sharedshoplistk.models.ShopListItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

@@ -1,37 +1,30 @@
 package com.dreamsphere.sharedshoplistk.viewmodel
 
-import android.content.Context
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import com.dreamsphere.sharedshoplistk.models.ShopListItem
-import com.dreamsphere.sharedshoplistk.repository.DataState
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.flow.Flow
+import com.dreamsphere.sharedshoplistk.repository.Firebase.Firebase
+import com.dreamsphere.sharedshoplistk.repository.Room.IdItem
+import com.dreamsphere.sharedshoplistk.repository.Room.IdRepository
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val repository: IdRepository) : ViewModel() {
 
-    val firebase = com.dreamsphere.sharedshoplistk.repository.Firebase()
+    //, private val shoplist_id: String
+    val firebase = Firebase()
     val shoplistID = String()
-    private var shopList = mutableStateListOf<ShopListItem>()
+    private var shopList1 = mutableStateListOf<ShopListItem>()
     private val SHOPLIST_ID = stringPreferencesKey("shoplist_id")
 
     //return to Room
 
 
 
-    private var shopList1 = mutableStateListOf(
+    private var shopList = mutableStateListOf(
         ShopListItem(0, "My First Task", false),
         ShopListItem(1, "My Second Task", true),
         ShopListItem(2, "My Third Task", true),
@@ -73,6 +66,26 @@ class MainViewModel : ViewModel() {
         val index = shopList.indexOf(todoItem)
         shopList.remove(shopList[index])
     }
+
+
+    // In coroutines thread insert item in insert function.
+    fun insert(item: IdItem) = GlobalScope.launch {
+        repository.insert(item)
+    }
+
+    // In coroutines thread delete item in delete function.
+    fun delete(item: IdItem) = GlobalScope.launch {
+        repository.delete(item)
+    }
+
+    //Here we initialized allGroceryItems function with repository
+    fun allIdItems() = repository.allIdItems()
+
+    //Number of Ids in the database
+    fun numberOfIds() = repository.numberOfIds()
+
+    //suspend fun getIdFromRoom(): String = repository.getAnId()
+
 
 
 }
